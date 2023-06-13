@@ -1,0 +1,31 @@
+base_images:
+  cli:
+    name: "4.13"
+    namespace: ocp
+    tag: cli
+releases:
+  latest:
+    candidate:
+      product: ocp
+      stream: nightly
+      version: "4.13"
+resources:
+  '*':
+    requests:
+      cpu: 100m
+      memory: 200Mi
+tests:
+- as: interop-rosa-hypershift-chetna
+  cron: 0 6 * * 1
+  steps:
+    cluster_profile: aws-cspi-qe
+    env:
+      CLUSTER_NAME: chetna-test
+      OPENSHIFT_VERSION: "4.13"
+      REGION: us-east-2
+    workflow: rosa-aws-sts-hypershift
+zz_generated_metadata:
+  branch: main
+  org: rhpit
+  repo: interop-tests
+  variant: hypershift4.13-poc
